@@ -15,6 +15,10 @@ class News(models.Model):
     catname = models.CharField(max_length=30,default='-')
     catid = models.IntegerField(default=0)
     show = models.IntegerField(default=0)
+    ocatid = models.IntegerField(default=0)
+    tag = models.TextField(default="")
+    act = models.IntegerField(default=0)
+    rand = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name

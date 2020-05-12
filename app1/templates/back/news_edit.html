@@ -4,6 +4,7 @@
 
 {% block mainblock %}
 {% load static %}
+<script src="{% static 'ckeditor/ckeditor.js' %}"></script>
                         <!-- Datatables Header -->
                         <div class="content-header">
                             <div class="header-section">
@@ -28,7 +29,7 @@
                                     <!-- END Form Elements Title -->
 
                                     <!-- Basic Form Elements Content -->
-                                    <form action="{%url 'news_add'%}" method="POST" enctype="multipart/form-data" class="form-horizontal form-bordered" >
+                                    <form action="{% url 'news_edit' pk=pk %}" method="POST" enctype="multipart/form-data" class="form-horizontal form-bordered" >
                                         {% csrf_token %}
                                         <div class="form-group">
                                             <div class="col-md-6">
@@ -37,6 +38,7 @@
 
                                             <div class="col-md-6">
                                                     <select id="newscat" name="newscat" class="select-chosen" data-placeholder="Choose a Category.." style="width: 250px;">
+                                                        <option value="{{news.catid}}"> {{news.catname}}</option>
                                                        {% for i in cat %}
                                                         <option value="{{i.pk}}">{{i.catname}} | {{i.name}}</option>
                                                        {% endfor %}
@@ -45,17 +47,23 @@
                                         </div>
                                             <div class="form-group">
                                                 <div class="col-md-12">
-                                                  <textarea id="newstextshort" name="newstextshort" rows="5" class="form-control" placeholder="Short text"></textarea>
+                                                  <textarea id="newstextshort" name="newstextshort" rows="5" class="form-control" placeholder="Short text">{{news.short_text}}</textarea>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <div class="col-md-12">
-                                                  <textarea id="newstxt" name="newstxt" rows="5" class="form-control" placeholder="Body text"></textarea>
+                                                  <textarea id="newstxt" name="newstxt" rows="5" class="form-control" placeholder="Body text">{{news.body_text}}</textarea>
                                                 </div>
                                             </div>
-                                          <div class="form-group">
+                                            <script>CKEDITOR.replace("newstxt")</script>
+                                            <div class="form-group">
                                                 <div class="col-md-6">
                                                   <input type="file" id="myfile" name="myfile" class="form-control" >
+                                                    <br/><br/>
+                                                    <textarea id="tag" name="tag" rows="5" class="form-control" placeholder="Tags">{{news.tag}}</textarea>
+                                                </div>
+                                                <div class="col-md-6">
+                                                  <img style="display:inline-block; width:250px; height:250px;" src="{{news.picurl}}">
                                                 </div>
                                             </div>
                                         <div class="form-group">
